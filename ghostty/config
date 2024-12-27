@@ -1,0 +1,12 @@
+theme = zenbones_light
+font-family = "Iosevka Term Medium Extended"
+command = fish
+gtk-titlebar = false
+gtk-wide-tabs = true
+gtk-adwaita = true
+confirm-close-surface = false
+bold-is-bright = true
+keybind = ctrl+shift+c=new_tab
+keybind = ctrl+d=close_window
+keybind = ctrl+shift+%=new_split:right
+keybind = ctrl+shift+"=new_split:down

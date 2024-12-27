@@ -16,6 +16,6 @@ nitrogen --restore &
 picom &
 pipewire && pipewire-pulse && wireplumber
 setxkbmap -option ctrl:nocaps
-xinput set-prop 17 "libinput Accel Profile Enabled" 0, 1, 0
-xinput set-prop 17 "libinput Accel Speed" -0.80
-/usr/libexec/polkit-gnome-authentication-agent-1 &
+# change this to your mouse thingy
+xinput set-prop 14 "libinput Accel Profile Enabled" 0, 1
+xinput set-prop 14 "libinput Accel Speed" -0.80
