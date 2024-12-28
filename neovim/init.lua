@@ -70,6 +70,13 @@ require("lazy").setup({
         --			opts = {},
         --		},
 
+        {
+            "supermaven-inc/supermaven-nvim",
+            config = function()
+                require("supermaven-nvim").setup({})
+            end,
+        },
+
         --		{
         --			"sainnhe/gruvbox-material",
         --			lazy = false,
@@ -91,7 +98,7 @@ require("lazy").setup({
             dependencies = { "nvim-lua/plenary.nvim" },
         },
 
-        {'norcalli/nvim-colorizer.lua'},
+        { 'norcalli/nvim-colorizer.lua' },
         --		{
         --			"neanias/everforest-nvim",
         --			version = false,
@@ -171,7 +178,7 @@ require("lazy").setup({
             "williamboman/mason-lspconfig.nvim",
             config = function()
                 require("mason-lspconfig").setup({
-                    ensure_installed = { "lua_ls", "gopls", "nil_ls" },
+                    ensure_installed = { "lua_ls", "gopls" },
                 })
             end,
         },
@@ -181,31 +188,17 @@ require("lazy").setup({
             config = function()
                 local capabilities = require("cmp_nvim_lsp").default_capabilities()
                 local lspconfig = require("lspconfig")
+                lspconfig.gleam.setup({})
                 lspconfig.lua_ls.setup({
-                    capabilities = capabilites,
-                })
-                lspconfig.gopls.setup({
                     capabilities = capabilities,
                 })
-                lspconfig.nil_ls.setup({
+                lspconfig.gopls.setup({
                     capabilities = capabilities,
                 })
                 lspconfig.cssls.setup({
                     capabilities = capabilities,
                 })
-                lspconfig.kotlin_language_server.setup({
-                    capabilities = capabilities,
-                })
-                lspconfig.jdtls.setup({
-                    capabilities = capabilities,
-                })
                 lspconfig.rust_analyzer.setup({
-                    capabilities = capabilities,
-                })
-                lspconfig.zls.setup({
-                    capabilities = capabilities,
-                })
-                lspconfig.clangd.setup({
                     capabilities = capabilities,
                 })
 
@@ -225,9 +218,6 @@ require("lazy").setup({
                         null_ls.builtins.formatting.gofumpt,
                         null_ls.builtins.formatting.golines,
                         null_ls.builtins.formatting.goimports,
-                        null_ls.builtins.formatting.google_java_format,
-                        --null_ls.builtins.formatting.rustfmt,
-                        null_ls.builtins.formatting.clang_format,
                     },
                 })
 
@@ -340,6 +330,7 @@ vim.keymap.set("n", "<a-h>", ':lua require("harpoon.mark").add_file()<CR>')
 vim.keymap.set("n", "<C-p>", ":Telescope harpoon marks<CR>")
 vim.keymap.set("n", "<leader><Right>", ":lua require('harpoon.ui').nav_next()<CR>")
 vim.keymap.set("n", "<leader><Left>", ":lua require('harpoon.ui').nav_prev()<CR>")
+vim.keymap.set("n", "<leader>s", ":SupermavenToggle<CR>")
 vim.opt.termguicolors = true
 vim.opt.swapfile = false
 vim.o.undodir = vim.fn.expand("~/.local/share/nvim/undo")
