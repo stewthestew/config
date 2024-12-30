@@ -4,6 +4,7 @@ font-family = "Iosevka Term Medium Extended"
 font-size = 14
 command = zs
 confirm-close-surface = false
+
 # gtk options
 gtk-titlebar = false
 gtk-wide-tabs = true
