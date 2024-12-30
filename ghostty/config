@@ -1,14 +1,17 @@
+# options
 theme = zenbones_light
 font-family = "Iosevka Term Medium Extended"
 font-size = 14
-command = zsh
+command = zs
+confirm-close-surface = false
+# gtk options
 gtk-titlebar = false
 gtk-wide-tabs = true
 gtk-adwaita = true
-confirm-close-surface = false
-bold-is-bright = false
+gtk-single-instance = false
+
+# binds
 keybind = ctrl+alt+c=new_tab
 keybind = ctrl+d=close_window
 keybind = ctrl+shift+%=new_split:right
 keybind = ctrl+shift+"=new_split:down
-gtk-single-instance = false
