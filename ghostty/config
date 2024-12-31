@@ -2,8 +2,9 @@
 theme = zenbones_light
 font-family = "Iosevka Term Medium Extended"
 font-size = 14
-command = zs
+command = zsh
 confirm-close-surface = false
+unfocused-split-opacity = 0.6
 
 # gtk options
 gtk-titlebar = false
