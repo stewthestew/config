@@ -1,15 +1,3 @@
--- options that saved my life
-vim.cmd("set expandtab")
-vim.cmd("set tabstop=4")
-vim.o.cursorline = true
-vim.cmd("set softtabstop=4")
-vim.cmd("set shiftwidth=4")
-vim.cmd("set nohlsearch")
-vim.opt.clipboard = "unnamedplus"
-
--- vim.cmd("set mouse=") i hate you firefox
-vim.cmd("set number") -- uncomment if you like this
--- Bootstrap lazy.nvim
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not (vim.uv or vim.loop).fs_stat(lazypath) then
     local lazyrepo = "https://github.com/folke/lazy.nvim.git"
@@ -26,51 +14,25 @@ if not (vim.uv or vim.loop).fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
--- Make sure to setup `mapleader` and `maplocalleader` before
--- loading lazy.nvim so that mappings are correct.
--- This is also a good place to setup other settings (vim.opt)
 vim.g.mapleader = " "
 vim.g.maplocalleader = "\\"
 
--- Setup lazy.nvim
 require("lazy").setup({
     spec = {
 
-        -- super maven
-        --		{
-        --			"ramojus/mellifluous.nvim",
-        --			version = "v1.*", -- uncomment for stable config (some features might be missed if/when v1 comes out)
-        --			config = function()
-        --				require("mellifluous").setup({}) -- optional, see configuration section.
-        --			end,
-        --		},
         {
             "zenbones-theme/zenbones.nvim",
             dependencies = "rktjmp/lush.nvim",
             lazy = false,
             priority = 1000,
-            -- you can set set configuration options here
-            -- config = function()
-            --     vim.g.zenbones_darken_comments = 45
-            --     vim.cmd.colorscheme('zenbones')
-            -- end
         },
         {
             "MeanderingProgrammer/render-markdown.nvim",
             dependencies = { "nvim-treesitter/nvim-treesitter", "echasnovski/mini.nvim" }, -- if you use the mini.nvim suite
-            -- dependencies = { 'nvim-treesitter/nvim-treesitter', 'echasnovski/mini.icons' }, -- if you use standalone mini plugins
-            -- dependencies = { 'nvim-treesitter/nvim-treesitter', 'nvim-tree/nvim-web-devicons' }, -- if you prefer nvim-web-devicons
             ---@module 'render-markdown'
             ---@type render.md.UserConfig
             opts = {},
         },
-        --		{
-        --			"romgrk/barbar.nvim",
-        --			init = function()
-        --				vim.g.barbar_auto_setup = false
-        --			end,
-        --			opts = {},
-        --		},
 
         {
             "supermaven-inc/supermaven-nvim",
@@ -78,21 +40,10 @@ require("lazy").setup({
                 require("supermaven-nvim").setup({})
             end,
         },
-
-        --		{
-        --			"sainnhe/gruvbox-material",
-        --			lazy = false,
-        --			priority = 1000,
-        --			config = function()
-        --				-- Optionally configure and load the colorscheme
-        --				-- directly inside the plugin declaration.
-        --				vim.g.gruvbox_material_enable_italic = true
-        --				vim.g.gruvbox_material_background = "soft"
-        --				vim.cmd.colorscheme("gruvbox-material")
-        --			end,
-        --		},
-
-        -- init.lua:
+        {
+            "ggandor/leap.nvim",
+            dependencies = { "tpope/vim-repeat" },
+        },
         {
             "nvim-telescope/telescope.nvim",
             tag = "0.1.8",
@@ -101,71 +52,10 @@ require("lazy").setup({
         },
 
         { "norcalli/nvim-colorizer.lua" },
-        --		{
-        --			"neanias/everforest-nvim",
-        --			version = false,
-        --			lazy = false,
-        --			priority = 1000,
-        --			config = function()
-        --				require("everforest").setup({
-        --					background = "hard",
-        --				})
-        --			end,
-        --		},
 
-        {
-            "nvim-lualine/lualine.nvim",
-            enabled = true,
-            dependencies = { "nvim-tree/nvim-web-devicons" },
-            config = function()
-                require("lualine").setup({
-                    icons_enabled = true,
-                    theme = "auto",
-                    component_separators = { left = "", right = "" },
-                    section_separators = { left = "", right = "" },
-                    disabled_filetypes = {
-                        statusline = {},
-                        winbar = {},
-                    },
-                })
-            end,
-        },
-        -- lazy.nvim
-        --		{
-        --			"folke/noice.nvim",
-        --			enabled = true,
-        --			event = "VeryLazy",
-        --			opts = {
-        --				-- add any options here
-        --				views = {
-        --					cmdline_popup = {
-        --						border = {
-        --							style = "none",
-        --							padding = { 2, 3 },
-        --						},
-        --						filter_options = {},
-        --						win_options = {
-        --							winhighlight = "NormalFloat:NormalFloat,FloatBorder:FloatBorder",
-        --						},
-        --					},
-        --				},
-        --			},
-        --			dependencies = {
-        --				-- if you lazy-load any plugin below, make sure to add proper `module="..."` entries
-        --				-- OPTIONAL:
-        --				--   `nvim-notify` is only needed, if you want to use the notification view.
-        --				--   If not available, we use `mini` as the fallback
-        --			},
-        --		},
-
-        -- Lua
         {
             "folke/zen-mode.nvim",
-            opts = {
-                -- your configuration comes here
-                -- or leave it empty to use the default settings
-                -- refer to the configuration section below
-            },
+            opts = {},
         },
 
         { "nvim-treesitter/nvim-treesitter", build = ":TSUpdate" },
@@ -203,7 +93,12 @@ require("lazy").setup({
                 lspconfig.rust_analyzer.setup({
                     capabilities = capabilities,
                 })
-
+                lspconfig.ts_ls.setup({
+                    capabilities = capabilities,
+                })
+                lspconfig.html.setup({
+                    capabilities = capabilities,
+                })
                 vim.keymap.set("n", "K", vim.lsp.buf.hover, {})
                 vim.keymap.set("n", "gd", vim.lsp.buf.definition, {})
                 vim.keymap.set({ "n", "v" }, "<leader>ca", vim.lsp.buf.code_action, {})
@@ -278,47 +173,35 @@ require("lazy").setup({
         -------------------------------------------------
         --| A | B | C                             X | Y | Z |
         ------------------------------------------------- ]]
-        --		{
-        --			"nvim-lualine/lualine.nvim",
-        --			config = function()
-        --				require("lualine").setup({
-        --					sections = {
-        --						lualine_a = { "mode" },
-        --						lualine_b = { "branch", "diff", "diagnostics" },
-        --						lualine_c = { "filename" },
-        --						lualine_x = { "encoding" },
-        --						lualine_y = { "progress" },
-        --						lualine_z = { "location" },
-        --					},
-        --				})
-        --			end,
-        --		},
+        {
+            "nvim-lualine/lualine.nvim",
+            enabled = true,
+            dependencies = { "nvim-tree/nvim-web-devicons" },
+            config = function()
+                require("lualine").setup({
+                    icons_enabled = true,
+                    theme = "auto",
+                    component_separators = { left = "", right = "" },
+                    section_separators = { left = "", right = "" },
+                    disabled_filetypes = {
+                        statusline = {},
+                        winbar = {},
+                    },
+                })
+            end,
+        },
 
         -- best plugin
         {
             "ThePrimeagen/harpoon",
         },
-        --		{
-        --			"ggandor/leap.nvim",
-        --			init = function()
-        --				require("leap").add_default_mappings()
-        --			end,
-        --			dependencies = {
-        --				"tpope/vim-repeat",
-        --			},
-        --			lazy = false,
-        --		},
     },
 
-    -- Configure any other settings here. See the documentation for more details.
-    -- colorscheme that will be used when installing plugins.
     install = { colorscheme = { "habamax" } },
-    -- automatically check for plugin updates
     checker = { enabled = false },
 })
 local config = require("nvim-treesitter.configs")
 config.setup({
-    --ensure_installed = { "lua", "go", "nix" },
     auto_install = true,
     highlight = { enable = true },
     indent = { enable = true },
@@ -326,7 +209,7 @@ config.setup({
 local builtin = require("telescope.builtin")
 vim.keymap.set("n", "<leader><leader>", builtin.find_files, {})
 vim.cmd("au ColorScheme * hi Comment cterm=italic gui=italic")
--- binds
+-- Options / Binds
 vim.keymap.set("n", "<leader>e", ':lua require("harpoon.ui").toggle_quick_menu()<CR>')
 vim.keymap.set("n", "<a-h>", ':lua require("harpoon.mark").add_file()<CR>')
 vim.keymap.set("n", "<C-p>", ":Telescope harpoon marks<CR>")
@@ -338,7 +221,17 @@ vim.opt.swapfile = false
 vim.o.undodir = vim.fn.expand("~/.local/share/nvim/undo")
 vim.o.undofile = true
 vim.cmd("hi Normal ctermbg=none guibg=none")
--- vim.cmd("colorscheme mellifluous")
 vim.cmd.colorscheme("zenbones")
---vim.cmd("set background=light")
 require("colorizer").setup()
+vim.keymap.set("n", "<leader>r", vim.lsp.buf.rename)
+require("leap").create_default_mappings()
+
+vim.cmd("set expandtab")
+vim.cmd("set tabstop=4")
+vim.o.cursorline = false
+vim.cmd("set softtabstop=4")
+vim.cmd("set shiftwidth=4")
+vim.cmd("set nohlsearch")
+vim.opt.clipboard = "unnamedplus"
+
+vim.cmd("set number") 
