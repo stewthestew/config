@@ -104,6 +104,22 @@ require("lazy").setup({
 		},
 
 		{
+			"nvimtools/none-ls.nvim",
+			config = function()
+				local null_ls = require("null-ls")
+				null_ls.setup({
+					sources = {
+						null_ls.builtins.formatting.stylua,
+						null_ls.builtins.formatting.gofumpt,
+						null_ls.builtins.formatting.golines,
+						null_ls.builtins.formatting.goimports,
+					},
+				})
+
+				vim.keymap.set("n", "<leader>gf", vim.lsp.buf.format, {})
+			end,
+		},
+		{
 			"hrsh7th/cmp-nvim-lsp",
 		},
 		{
@@ -157,17 +173,19 @@ require("lazy").setup({
 		------------------------------------------------- ]]
 		{
 			"nvim-lualine/lualine.nvim",
-			enabled = true,
+			enabled = false, -- Enable to make it look like the screenshot
 			dependencies = { "nvim-tree/nvim-web-devicons" },
 			config = function()
 				require("lualine").setup({
-					icons_enabled = true,
-					theme = "auto",
-					component_separators = { left = "", right = "" },
-					section_separators = { left = "", right = "" },
-					disabled_filetypes = {
-						statusline = {},
-						winbar = {},
+					options = {
+						icons_enabled = true,
+						theme = "auto",
+						component_separators = { left = "", right = "" },
+						section_separators = { left = "", right = "" },
+						disabled_filetypes = {
+							statusline = {},
+							winbar = {},
+						},
 					},
 				})
 			end,
@@ -217,4 +235,3 @@ vim.cmd("set shiftwidth=4")
 vim.cmd("set nohlsearch")
 vim.opt.clipboard = "unnamedplus"
 vim.cmd("set number")
-vim.keymap.set("n", "<leader>gf", "ggVG=", { noremap = true, silent = true })
