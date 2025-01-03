@@ -34,6 +34,7 @@ require("lazy").setup({
 			opts = {},
 		},
 
+		{ "navarasu/onedark.nvim" },
 		{
 			"supermaven-inc/supermaven-nvim",
 			config = function()
@@ -223,7 +224,7 @@ vim.opt.swapfile = false
 vim.o.undodir = vim.fn.expand("~/.local/share/nvim/undo")
 vim.o.undofile = true
 vim.cmd("hi Normal ctermbg=none guibg=none")
-vim.cmd.colorscheme("zenbones")
+vim.cmd.colorscheme("onedark")
 vim.keymap.set("n", "<leader>r", vim.lsp.buf.rename)
 require("leap").create_default_mappings()
 
