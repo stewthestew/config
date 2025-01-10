@@ -1,15 +1,17 @@
 # options
 #theme = zenbones_light
-font-size = 14
+font-size = 13
 command = zsh
 confirm-close-surface = false
 unfocused-split-opacity = 0.6
 background-opacity = 1
+
 # gtk options
 gtk-titlebar = false
 gtk-wide-tabs = false
 gtk-adwaita = false
 gtk-single-instance = false
+background-opacity = 0.8
 
 # colors
 palette = 0=#282c34
