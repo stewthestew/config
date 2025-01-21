@@ -22,35 +22,52 @@ require("lazy").setup({
 
         {
             "MeanderingProgrammer/render-markdown.nvim",
-            dependencies = { "nvim-treesitter/nvim-treesitter", "echasnovski/mini.nvim" }, -- if you use the mini.nvim suite
+            dependencies = { "nvim-treesitter/nvim-treesitter" }, -- if you use the mini.nvim suite
             ---@module 'render-markdown'
             ---@type render.md.UserConfig
             opts = {},
         },
+--        {
+--            "olimorris/codecompanion.nvim",
+--            dependencies = {
+--                "nvim-lua/plenary.nvim",
+--                "nvim-treesitter/nvim-treesitter",
+--            },
+--            config = function()
+--                require("codecompanion").setup({
+--                    chat = {
+--                        provider = "ollama",
+--                        model = "codellama:latest",
+--                    },
+--                })
+--            end,
+--        },
         {
-            "olimorris/codecompanion.nvim",
-            dependencies = {
-                "nvim-lua/plenary.nvim",
-                "nvim-treesitter/nvim-treesitter",
-            },
-            config = function()
-                require("codecompanion").setup({
-                    chat = {
-                        provider = "ollama",
-                        model = "codellama:latest",
-                    },
-                })
-            end,
-        },
-        { "navarasu/onedark.nvim" },
+            "navarasu/onedark.nvim",
+            enabled = false
 
+        },
+        { "mellow-theme/mellow.nvim" },
         {
             "nvim-telescope/telescope.nvim",
             tag = "0.1.8",
             -- or                              , branch = '0.1.x',
             dependencies = { "nvim-lua/plenary.nvim" },
         },
-
+        {
+            "folke/noice.nvim",
+            event = "VeryLazy",
+            opts = {
+                -- add any options here
+            },
+            dependencies = {
+                -- if you lazy-load any plugin below, make sure to add proper `module="..."` entries
+                "MunifTanjim/nui.nvim",
+                -- OPTIONAL:
+                --   `nvim-notify` is only needed, if you want to use the notification view.
+                --   If not available, we use `mini` as the fallback
+            }
+        },
         { "nvim-treesitter/nvim-treesitter", build = ":TSUpdate" },
 
         {
@@ -67,7 +84,9 @@ require("lazy").setup({
                 })
             end,
         },
-
+        {
+            "norcalli/nvim-colorizer.lua",
+        },
         {
             "neovim/nvim-lspconfig",
             config = function()
@@ -108,7 +127,6 @@ require("lazy").setup({
                         null_ls.builtins.formatting.gofumpt,
                         null_ls.builtins.formatting.golines,
                         null_ls.builtins.formatting.goimports,
-                        null_ls.builtins.formatting.jq,
                     },
                 })
 
@@ -169,15 +187,33 @@ require("lazy").setup({
         ------------------------------------------------- ]]
         {
             "nvim-lualine/lualine.nvim",
-            enabled = false, -- Enable to make it look like the screenshot
+            enabled = true, -- Enable to make it look like the screenshot
             dependencies = { "nvim-tree/nvim-web-devicons" },
             config = function()
+                local colors = require("mellow.colors").dark
+                local mellow = {
+                    normal = {
+                        a = { fg = colors.bg, bg = colors.cyan, gui = "bold" },
+                        b = { fg = colors.white, bg = colors.gray02 },
+                        c = { fg = colors.white, bg = colors.gray01 },
+                    },
+                    command = { a = { fg = colors.bg, bg = colors.yellow, gui = "bold" } },
+                    insert = { a = { fg = colors.bg, bg = colors.blue, gui = "bold" } },
+                    visual = { a = { fg = colors.bg, bg = colors.magenta, gui = "bold" } },
+                    terminal = { a = { fg = colors.bg, bg = colors.green, gui = "bold" } },
+                    replace = { a = { fg = colors.bg, bg = colors.red, gui = "bold" } },
+                    inactive = {
+                        a = { fg = colors.gray05, bg = colors.bg_dark, gui = "bold" },
+                        b = { fg = colors.gray05, bg = colors.bg_dark },
+                        c = { fg = colors.gray05, bg = colors.bg_dark },
+                    },
+                }
                 require("lualine").setup({
                     options = {
                         icons_enabled = true,
-                        theme = "auto",
-                        component_separators = { left = "", right = "" },
-                        section_separators = { left = "", right = "" },
+                        theme = mellow,
+                        component_separators = { left = "", right = "" },
+                        section_separators = { left = "", right = "" },
                         disabled_filetypes = {
                             statusline = {},
                             winbar = {},
@@ -219,9 +255,9 @@ vim.opt.swapfile = false
 vim.o.undodir = vim.fn.expand("~/.local/share/nvim/undo")
 vim.o.undofile = true
 vim.cmd("hi Normal ctermbg=none guibg=none")
-vim.cmd.colorscheme("onedark")
+vim.cmd.colorscheme("mellow")
 vim.keymap.set("n", "<leader>r", vim.lsp.buf.rename)
-
+vim.opt.relativenumber = true
 vim.cmd("set expandtab")
 vim.cmd("set tabstop=4")
 vim.o.cursorline = false
@@ -229,8 +265,26 @@ vim.cmd("set softtabstop=4")
 vim.cmd("set shiftwidth=4")
 vim.cmd("set nohlsearch")
 vim.opt.clipboard = "unnamedplus"
+vim.opt.smartindent = true
 vim.cmd("set number")
 vim.api.nvim_set_hl(0, "Normal", { bg = "NONE" })
 vim.api.nvim_set_hl(0, "NormalNC", { bg = "NONE" })
 vim.api.nvim_set_hl(0, "SignColumn", { bg = "NONE" })
 vim.api.nvim_set_hl(0, "VertSplit", { bg = "NONE" })
+require 'colorizer'.setup()
+-- Enable spell check for markdown and text files
+vim.api.nvim_create_autocmd("FileType", {
+    pattern = { "markdown", "text" },
+    callback = function()
+        vim.opt_local.spell = true
+        vim.opt_local.spelllang = "en_us"
+    end,
+})
+-- Disable spell check for other file types
+vim.api.nvim_create_autocmd("BufEnter", {
+    callback = function()
+        if vim.bo.filetype ~= "markdown" and vim.bo.filetype ~= "text" then
+            vim.opt_local.spell = false
+        end
+    end,
+})

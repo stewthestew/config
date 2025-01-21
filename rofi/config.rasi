@@ -1,17 +1,17 @@
 @import "default"
 
 * {
-    bg: #282c34;
-    cur: #abb2bf;
-    fgd: #abb2bf;
+    bg: #161617;
+    cur: #e3e2e5;
+    fgd: #e3e2e5;
     cmt: #6e6a86;
     cya: #56b6c2;
-    grn: #98c379;
+    grn: #90b99f;
     ora: #e06c75;
     pur: #c678dd;
     red: #e06c75;
     yel: #e5c07b;
-    blk: #5c6370;
+    blk: #3C3B3E;
     font: "Cartograph CF 12";
 
     foreground: @fgd;
@@ -80,7 +80,7 @@
 
 #element.selected.normal {
     background-color: @selected-background;
-    text-color: @foreground;
+    text-color: @red;
 }
 
 #element.selected.urgent {

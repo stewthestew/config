@@ -1,6 +1,6 @@
 # options
-#theme = zenbones_light
-font-size = 13
+font-family = Iosevka Term Medium Extended
+font-size = 14
 command = zsh
 confirm-close-surface = false
 unfocused-split-opacity = 0.6
@@ -11,34 +11,29 @@ gtk-titlebar = false
 gtk-wide-tabs = false
 gtk-adwaita = false
 gtk-single-instance = false
-background-opacity = 0.8
 
 # colors
-palette = 0=#282c34
-palette = 1=#e06c75
-palette = 2=#98c379
-palette = 3=#e5c07b
-palette = 4=#61afef
-palette = 5=#c678dd
-palette = 6=#56b6c2
-palette = 7=#abb2bf
-palette = 8=#5c6370
-palette = 9=#e06c75
-palette = 10=#98c379
-palette = 11=#e5c07b
-palette = 12=#61afef
-palette = 13=#c678dd
-palette = 14=#56b6c2
-palette = 15=#ffffff
-background = 282c34
-foreground = abb2bf
-cursor-color = 528bff
-selection-background = 3e4451
-selection-foreground = abb2bf
+background = 161617
+foreground = c9c7cd
+cursor-color = e3e2e5
+selection-foreground = e3e2e5
+selection-background = 3C3B3E
 
-## Using tmux now
-# binds
-#keybind = ctrl+alt+c=new_tab
-#keybind = ctrl+d=close_window
-#keybind = ctrl+shift+%=new_split:right
-#keybind = ctrl+shift+"=new_split:down
+############################# 
+
+palette = 0=#27272a
+palette = 1=#f5a191
+palette = 2=#90b99f
+palette = 3=#e6b99d
+palette = 4=#aca1cf
+palette = 5=#e29eca
+palette = 6=#ea83a5
+palette = 7=#c1c0d4
+palette = 8=#353539
+palette = 9=#ffae9f
+palette = 10=#9dc6ac
+palette = 11=#f0c5a9
+palette = 12=#b9aeda
+palette = 13=#ecaad6
+palette = 14=#f591b2
+palette = 15=#cac9dd
